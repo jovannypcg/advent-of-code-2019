@@ -1,23 +1,28 @@
 (ns day-1.spacecraft
   (:require [clojure.edn :as edn]
-            [clojure.java.io :as io]))
+            [common.misc :as misc]))
 
 (defonce module-masses
   (-> "module-masses.edn"
-      io/resource
-      slurp
-      .getBytes
-      io/reader
-      java.io.PushbackReader.
+      misc/load-resource
       edn/read))
 
-(defn module-fuel-required
+(defn single-fuel-required
   [module-mass]
   (-> module-mass
       (/ 3.0)
       Math/floor
       (- 2)
       int))
+
+(defn module-fuel-required
+  [mass]
+  (loop [fuel       (single-fuel-required mass)
+         total-fuel 0]
+    (if (<= fuel 0)
+      total-fuel
+      (recur (single-fuel-required fuel)
+             (+ fuel total-fuel)))))
 
 (defn fuel-required
   [module-masses]
