@@ -15,6 +15,7 @@ Solutions to problems from Advent of Code 2019.
 
 * Java 8
 * Clojure 1.10.1
+* Leiningen 2.9.3 (optional)
 
 ### SDKMan
 
@@ -31,31 +32,72 @@ $ export JAVA_HOME=~/.sdkman/candidates/java/current
 
 Visit the [official web site](https://clojure.org/guides/getting_started) to get the instructions according to your operating system.
 
+### Installing Leiningen
+
+Visit the [official web site](https://leiningen.org/#install) to get the instructions according to your operating system.
+
 ## Usage
 
-### Start a REPL
+### Leiningen
+
+#### Start a REPL
 
 ```shell
 $ cd /path/to/repo
-$ clj
+$ lein repl
 ```
 
-### Playing around
+#### Playing around
 
-Once the repl has started, load the files you are interested in executing and change to the appropriate namespace.
-For example, to load the `spacecraft.clj` file in the `day_1` directory to play with its functions, run:
+Once the repl has started, change the namespace for the one you are interested in.
+For example, to play around with the `day-1.spacecraft` namespace, run:
 
 ```shell
-user=> (load-file "src/main/clojure/day_1/spacecraft.clj")
-#'day-1.spacecraft/fuel-required
-
-user=> (in-ns 'day-1.spacecraft)
+advent-of-code=> (in-ns 'day-1.spacecraft)
+#object[clojure.lang.Namespace 0x7725cd39 "day-1.spacecraft"]
 
 day-1.spacecraft=> (fuel-required module-masses)
 4959709
 ```
 
-## Testing
+#### Testing
+
+```shell
+$ lein test
+```
+
+### Clojure CLI
+
+#### Start a REPL
+
+```shell
+$ cd /path/to/repo
+$ clj
+Clojure 1.10.1
+user=>
+```
+
+#### Playing around
+
+Once the repl has started, load the `advent_of_code.clj` file, that requires the namespaces
+of all days. It is like a facade to those namespaces to avoid loading each file. Then change the current
+namespace for the one you are interested in.
+
+For example, to play around with the `day-1.spacecraft` namespace, run:
+
+```shell
+user=> (load-file "src/main/clojure/advent_of_code.clj")
+nil
+
+user=> (in-ns 'day-1.spacecraft)
+#object[clojure.lang.Namespace 0x7725cd39 "day-1.spacecraft"]
+
+day-1.spacecraft=> (fuel-required module-masses)
+4959709
+```
+
+
+#### Testing
 
 ```shell
 $ clj -Atest
